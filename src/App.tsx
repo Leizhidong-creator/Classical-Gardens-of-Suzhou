@@ -118,7 +118,6 @@ function App() {
       audio.volume = 1
       audio.loop = true
       audio.muted = false
-      audio.playsInline = true
       await audio.play()
       setIsAudioPlaying(true)
       return true
