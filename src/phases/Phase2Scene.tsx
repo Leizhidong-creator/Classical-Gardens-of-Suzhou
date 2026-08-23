@@ -64,7 +64,7 @@ const COMPACT_TAG_SUMMARIES: Record<string, string> = {
   gualuo: '柱间镂空饰件',
 }
 
-const PHASE2_BG_IMAGE = "/assets/模块二背景图.jpg?v=20260426-strong-garden"
+const PHASE2_BG_IMAGE = "/assets/模块二背景图.webp?v=20260426-strong-garden"
 
 const MODEL_OPTIONS: ScenicModelConfig[] = [
   {

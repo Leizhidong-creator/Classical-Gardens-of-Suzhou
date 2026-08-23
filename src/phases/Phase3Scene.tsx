@@ -190,7 +190,7 @@ export function Phase3Scene({ onContinue }: Phase3SceneProps) {
 
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/assets/第三幕背景.jpg')" }}
+        style={{ backgroundImage: "url('/assets/第三幕背景.webp')" }}
       />
 
       <div className="relative z-10 mx-auto flex min-h-screen max-w-[1600px] flex-col px-4 pb-6 pt-20 md:px-8 md:pb-8 md:pt-24">
@@ -258,14 +258,14 @@ export function Phase3Scene({ onContinue }: Phase3SceneProps) {
           <div className="relative z-20 mx-auto aspect-square w-full max-w-[min(62vw,68vh)] overflow-hidden rounded-[30px] shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
             <img
               ref={colorImageRef}
-              src="/assets/ink-color-bg.jpg"
+              src="/assets/ink-color-bg.webp"
               alt="点亮后的江南夜景"
               className="absolute inset-0 h-full w-full object-cover object-center"
               style={{ opacity: 0 }}
             />
             <img
               ref={darkImageRef}
-              src="/assets/ink-dark-bg.jpg"
+              src="/assets/ink-dark-bg.webp"
               alt="昏暗的江南夜景"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />

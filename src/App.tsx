@@ -50,16 +50,15 @@ function App() {
 
   useEffect(() => {
     const imageAssets = [
-      '/assets/bg-clear-garden.jpg',
+      '/assets/bg-clear-garden.webp',
       '/assets/window-frame-mask.png',
-      '/assets/模块二背景图.jpg',
-      '/assets/ink-dark-bg.jpg',
-      '/assets/ink-color-bg.jpg',
-      '/assets/lantern-icon.png',
-      '/assets/element-pavilion.png',
-      '/assets/element-taihu-rock（1）.png',
-      '/assets/element-taihu-rock（2）.png',
-      '/assets/element-flora.png',
+      '/assets/模块二背景图.webp',
+      '/assets/ink-dark-bg.webp',
+      '/assets/ink-color-bg.webp',
+      '/assets/element-pavilion.webp',
+      '/assets/element-taihu-rock（1）.webp',
+      '/assets/element-taihu-rock（2）.webp',
+      '/assets/element-flora.webp',
     ]
 
     const loadImage = (src: string) => {

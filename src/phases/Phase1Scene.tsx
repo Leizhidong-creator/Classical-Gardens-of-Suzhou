@@ -365,7 +365,7 @@ export function Phase1Scene({ onContinue }: Phase1SceneProps) {
 
     const initializeLayers = async () => {
       const [clearGardenImage, windowFrameImage] = await Promise.all([
-        loadImage('/assets/bg-clear-garden.jpg'),
+        loadImage('/assets/bg-clear-garden.webp'),
         loadImage('/assets/window-frame-mask.png'),
       ])
 
