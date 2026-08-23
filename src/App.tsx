@@ -216,7 +216,6 @@ function App() {
 
     audio.addEventListener('play', handlePlay)
     audio.addEventListener('pause', handlePause)
-    void playBackgroundAudio()
     window.addEventListener('pointerdown', handleFirstInteraction, { passive: true })
     window.addEventListener('keydown', handleFirstInteraction)
     window.addEventListener('touchstart', handleFirstInteraction, { passive: true })
