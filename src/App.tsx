@@ -61,32 +61,82 @@ function App() {
       '/assets/element-flora.png',
     ]
 
-    imageAssets.forEach((src) => {
+    const loadImage = (src: string) => {
       const image = new Image()
+      image.decoding = 'async'
       image.src = src
-    })
+    }
+
+    // Keep the first scene responsive; the remaining scene art can arrive in idle time.
+    imageAssets.slice(0, 3).forEach(loadImage)
+
+    const loadDeferredImages = () => {
+      imageAssets.slice(3).forEach(loadImage)
+    }
+
+    let idleImageHandle: number | undefined
+    let imageTimeoutHandle: number | undefined
+
+    if (typeof window.requestIdleCallback === 'function') {
+      idleImageHandle = window.requestIdleCallback(loadDeferredImages, { timeout: 2000 })
+    } else {
+      imageTimeoutHandle = setTimeout(loadDeferredImages, 1500)
+    }
 
     const preloadLinks = [
-      { href: '/assets/suzhou-pavilion.glb', rel: 'prefetch' },
       { href: '/assets/tags.json', rel: 'prefetch' },
-      { href: '/assets/音频.mp3', rel: 'preload', as: 'audio' },
     ]
-      .map(({ href, rel, as }) => {
+      .map(({ href, rel }) => {
         const link = document.createElement('link')
         link.rel = rel
         link.href = href
-        if (as) {
-          link.as = as
-        } else {
-          link.as = 'fetch'
-          link.crossOrigin = 'anonymous'
-        }
+        link.as = 'fetch'
+        link.crossOrigin = 'anonymous'
         link.setAttribute('data-yuyuan-preload', href)
         document.head.appendChild(link)
         return link
       })
 
+    let idleLinkHandle: number | undefined
+    let linkTimeoutHandle: number | undefined
+
+    const addDeferredPreloadLinks = () => {
+      ;[
+        { href: '/assets/suzhou-pavilion.glb', rel: 'prefetch' },
+        { href: '/assets/音频.mp3', rel: 'prefetch' },
+      ].forEach(({ href, rel }) => {
+        const link = document.createElement('link')
+        link.rel = rel
+        link.href = href
+        link.setAttribute('data-yuyuan-preload', href)
+        document.head.appendChild(link)
+        preloadLinks.push(link)
+      })
+    }
+
+    if (typeof window.requestIdleCallback === 'function') {
+      idleLinkHandle = window.requestIdleCallback(addDeferredPreloadLinks, { timeout: 2500 })
+    } else {
+      linkTimeoutHandle = setTimeout(addDeferredPreloadLinks, 2000)
+    }
+
     return () => {
+      if (idleImageHandle !== undefined) {
+        window.cancelIdleCallback(idleImageHandle)
+      }
+
+      if (imageTimeoutHandle !== undefined) {
+        window.clearTimeout(imageTimeoutHandle)
+      }
+
+      if (idleLinkHandle !== undefined) {
+        window.cancelIdleCallback(idleLinkHandle)
+      }
+
+      if (linkTimeoutHandle !== undefined) {
+        window.clearTimeout(linkTimeoutHandle)
+      }
+
       preloadLinks.forEach((link) => {
         link.remove()
       })
@@ -236,7 +286,7 @@ function App() {
 
   return (
     <main className="relative">
-      <audio ref={backgroundAudioRef} src="/assets/音频.mp3" loop preload="auto" className="hidden" />
+      <audio ref={backgroundAudioRef} src="/assets/音频.mp3" loop preload="metadata" className="hidden" />
       <header className="fixed inset-x-0 top-0 z-[500] px-4 py-4 lg:px-6">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-3 text-white lg:flex-row lg:items-center lg:justify-between">
           <div className="pointer-events-none">

@@ -637,5 +637,3 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
 }
 
 useGLTF.preload('/assets/suzhou-pavilion.glb')
-useGLTF.preload('/assets/1.glb')
-useGLTF.preload('/assets/2.glb')
