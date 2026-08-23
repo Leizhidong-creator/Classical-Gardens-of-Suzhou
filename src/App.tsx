@@ -50,11 +50,12 @@ function App() {
 
   useEffect(() => {
     const imageAssets = [
+      '/assets/bg-clear-garden.jpg',
+      '/assets/window-frame-mask.png',
+      '/assets/模块二背景图.jpg',
       '/assets/ink-dark-bg.jpg',
       '/assets/ink-color-bg.jpg',
       '/assets/lantern-icon.png',
-      '/assets/window-frame-mask.png',
-      '/assets/bg-clear-garden.jpg',
       '/assets/element-pavilion.png',
       '/assets/element-taihu-rock（1）.png',
       '/assets/element-taihu-rock（2）.png',
