@@ -48,9 +48,19 @@
 
 亭台、假山、树影和水面被压缩到一个可以旋转、缩放和凝视的尺度里。Three.js 与 WebGL 负责空间、材质、光影和相机运动，2D DOM 则承接标题、说明、按钮和构件信息，让页面同时拥有场景的纵深与文字的可读性。
 
+<p align="center">
+  <img src="src/assets/images/projects/garden-dream/garden-dream-3.webp" alt="灯火阑珊：点亮园林夜色与诗词意境" width="100%" />
+  <sub>灯火阑珊 · 点灯成诗</sub>
+</p>
+
 ### 🪨 从观者到造园者
 
 “一窗一景”是项目最重要的参与式设计。用户可以拖拽亭台、假山等园林元素，重新组织一幅属于自己的窗景。园林不再是固定答案，而是一个可以被重新编排的审美空间，真正落到“一千个人心里有一千座园林”。
+
+<p align="center">
+  <img src="src/assets/images/projects/garden-dream/garden-dream-4.webp" alt="一窗一景：自由组合亭台、太湖石与花木" width="100%" />
+  <sub>一窗一景 · 自由造园</sub>
+</p>
 
 ## ⚙️ 技术实现
 
