@@ -6,7 +6,7 @@
 
 把苏州园林放进一扇花窗，也把“游园”从观看变成参与。
 
-[![Vue 3](https://img.shields.io/badge/Vue_3-35495E?logo=vue.js&logoColor=4FC08D)](https://vuejs.org/)
+[![React 19](https://img.shields.io/badge/React_19-20232A?logo=react&logoColor=61DAFB)](https://react.dev/)
 [![Three.js](https://img.shields.io/badge/Three.js-000000?logo=three.js&logoColor=white)](https://threejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
@@ -66,18 +66,18 @@ Three.js + WebGL 场景搭建
 DOM 与 3D 混合交互
 ```
 
-### 🧭 当前仓库
+### 🧰 技术栈
 
-当前仓库是项目展示站的 Vue 实现，技术栈包括：
+本仓库是《游园惊梦》的完整竞赛实现，主要使用以下技术：
 
-- **Vue 3 + TypeScript + Vite**：组织页面、路由和项目内容。
-- **Three.js + GLSL**：承载实时 3D 场景、材质和自定义 shader。
-- **GSAP + Lenis**：处理场景转场、滚动节奏和细腻的页面运动。
-- **Howler**：管理环境声、交互音效和声音开关。
-
-### ⏳ 竞赛版本
-
-竞赛原型曾使用 React / React Three Fiber 搭建园林体验。README 将下面的 React 技术写作竞赛版本的实现思路，与当前 Vue 展示站区分开来。
+- **React 19 + TypeScript + Vite**：组织四幕场景、组件状态、资源加载与页面构建。
+- **Three.js + React Three Fiber**：搭建和渲染实时 3D 园林场景。
+- **React Three Drei**：通过 `useGLTF`、`OrbitControls` 和 `Html` 实现模型加载、旋转缩放与空间标签。
+- **GSAP**：处理四幕之间的转场、界面动画与场景明暗变化。
+- **Tailwind CSS + PostCSS**：完成响应式布局、视觉样式和交互状态。
+- **Canvas 2D**：通过 `globalCompositeOperation` 实现第一幕“擦去晨雾”的交互。
+- **HTML Audio**：管理背景音乐，并在用户交互后按需加载和播放。
+- **JSON 空间数据**：使用 `tags.json` 映射园林构件、模型局部坐标与科普内容。
 
 ## ⚡ 我是如何优化这条链路的
 
