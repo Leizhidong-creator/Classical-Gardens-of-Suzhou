@@ -30,7 +30,7 @@
 
 **Classical Gardens of Suzhou** is an immersive web experience that reimagines Suzhou's classical gardens as a miniature, interactive digital world. Through flower-window storytelling, AI-assisted 3D assets, and a user-editable garden sandbox, the project turns cultural browsing into a quiet act of exploration and creation.
 
-## 🌿 这是什么
+## 🌿 项目概览
 
 传统园林擅长用有限的空间制造无限的想象：一窗可以借景，一墙可以藏景，一条曲廊可以让人在行走中不断遇见新的画面。
 
