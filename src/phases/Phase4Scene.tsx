@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
+import { assetUrl } from '../assetUrl'
 
 type GardenElement = {
   id: string
@@ -21,7 +22,7 @@ const initialElements: GardenElement[] = [
   {
     id: 'pavilion',
     label: '亭台',
-    src: '/assets/element-pavilion.webp',
+    src: assetUrl('element-pavilion.webp'),
     x: 46,
     y: 38,
     width: 22,
@@ -30,7 +31,7 @@ const initialElements: GardenElement[] = [
   {
     id: 'banana-leaf',
     label: '芭蕉叶',
-    src: '/assets/芭蕉叶.webp',
+    src: assetUrl('芭蕉叶.webp'),
     x: 74,
     y: 44,
     width: 22,
@@ -39,7 +40,7 @@ const initialElements: GardenElement[] = [
   {
     id: 'rock-1',
     label: '太湖石一',
-    src: '/assets/element-taihu-rock（1）.webp',
+    src: assetUrl('element-taihu-rock（1）.webp'),
     x: 24,
     y: 58,
     width: 16,
@@ -48,7 +49,7 @@ const initialElements: GardenElement[] = [
   {
     id: 'rock-2',
     label: '太湖石二',
-    src: '/assets/element-taihu-rock（2）.webp',
+    src: assetUrl('element-taihu-rock（2）.webp'),
     x: 68,
     y: 48,
     width: 17,
@@ -57,7 +58,7 @@ const initialElements: GardenElement[] = [
   {
     id: 'flora',
     label: '花木',
-    src: '/assets/element-flora.webp',
+    src: assetUrl('element-flora.webp'),
     x: 74,
     y: 72,
     width: 18,
@@ -158,7 +159,7 @@ export function Phase4Scene() {
       <div
         className="absolute inset-0 scale-[1.03] bg-cover bg-center bg-no-repeat opacity-[0.98]"
         style={{
-          backgroundImage: "url('/assets/第四幕大背景.webp')",
+          backgroundImage: `url("${assetUrl('第四幕大背景.webp')}")`,
           filter: 'saturate(1.08) contrast(1.08) brightness(0.94)',
         }}
       />
@@ -298,7 +299,7 @@ export function Phase4Scene() {
 
               <div className="relative mt-5 h-[470px] overflow-hidden rounded-[34px] border border-[#d7dfda] bg-[#d7ddd7] lg:h-[500px]">
                 <img
-                  src="/assets/水墨背景.webp?v=20260426-unified-ink"
+                  src={assetUrl('水墨背景.webp?v=20260426-unified-ink')}
                   alt=""
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
@@ -351,7 +352,7 @@ export function Phase4Scene() {
                 </div>
 
                 <img
-                  src="/assets/背景花窗.webp"
+                  src={assetUrl('背景花窗.webp')}
                   alt=""
                   aria-hidden="true"
                   className="pointer-events-none absolute inset-0 z-[300] h-full w-full object-cover"

@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { assetUrl } from './assetUrl'
 
 const Phase1Scene = lazy(async () => ({
   default: (await import('./phases/Phase1Scene')).Phase1Scene,
@@ -50,15 +51,15 @@ function App() {
 
   useEffect(() => {
     const imageAssets = [
-      '/assets/bg-clear-garden.webp',
-      '/assets/window-frame-mask.png',
-      '/assets/模块二背景图.webp',
-      '/assets/ink-dark-bg.webp',
-      '/assets/ink-color-bg.webp',
-      '/assets/element-pavilion.webp',
-      '/assets/element-taihu-rock（1）.webp',
-      '/assets/element-taihu-rock（2）.webp',
-      '/assets/element-flora.webp',
+      assetUrl('bg-clear-garden.webp'),
+      assetUrl('window-frame-mask.png'),
+      assetUrl('模块二背景图.webp'),
+      assetUrl('ink-dark-bg.webp'),
+      assetUrl('ink-color-bg.webp'),
+      assetUrl('element-pavilion.webp'),
+      assetUrl('element-taihu-rock（1）.webp'),
+      assetUrl('element-taihu-rock（2）.webp'),
+      assetUrl('element-flora.webp'),
     ]
 
     const loadImage = (src: string) => {
@@ -84,7 +85,7 @@ function App() {
     }
 
     const preloadLinks = [
-      { href: '/assets/tags.json', rel: 'prefetch' },
+      { href: assetUrl('tags.json'), rel: 'prefetch' },
     ]
       .map(({ href, rel }) => {
         const link = document.createElement('link')
@@ -102,8 +103,8 @@ function App() {
 
     const addDeferredPreloadLinks = () => {
       ;[
-        { href: '/assets/suzhou-pavilion.glb', rel: 'prefetch' },
-        { href: '/assets/音频.mp3', rel: 'prefetch' },
+        { href: assetUrl('suzhou-pavilion.glb'), rel: 'prefetch' },
+        { href: assetUrl('音频.mp3'), rel: 'prefetch' },
       ].forEach(({ href, rel }) => {
         const link = document.createElement('link')
         link.rel = rel
@@ -285,7 +286,7 @@ function App() {
 
   return (
     <main className="relative">
-      <audio ref={backgroundAudioRef} src="/assets/音频.mp3" loop preload="metadata" className="hidden" />
+      <audio ref={backgroundAudioRef} src={assetUrl('音频.mp3')} loop preload="metadata" className="hidden" />
       <header className="fixed inset-x-0 top-0 z-[500] px-4 py-4 lg:px-6">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-3 text-white lg:flex-row lg:items-center lg:justify-between">
           <div className="pointer-events-none">

@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import type { ThreeEvent } from '@react-three/fiber'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import type { Group, Mesh, MeshStandardMaterial, Object3D } from 'three'
+import { assetUrl } from '../assetUrl'
 
 type TagItem = {
   id: string
@@ -64,7 +65,7 @@ const COMPACT_TAG_SUMMARIES: Record<string, string> = {
   gualuo: '柱间镂空饰件',
 }
 
-const PHASE2_BG_IMAGE = "/assets/模块二背景图.webp?v=20260426-strong-garden"
+const PHASE2_BG_IMAGE = assetUrl('模块二背景图.webp?v=20260426-strong-garden')
 
 const MODEL_OPTIONS: ScenicModelConfig[] = [
   {
@@ -72,7 +73,7 @@ const MODEL_OPTIONS: ScenicModelConfig[] = [
     name: '苏州园林四角亭',
     location: '苏州园林',
     badge: '部位可点读',
-    assetPath: '/assets/suzhou-pavilion.glb',
+    assetPath: assetUrl('suzhou-pavilion.glb'),
     shortIntro: '可点构件讲解',
     description:
       '这座四角亭以攒尖屋顶、立柱与台基组成完整的江南亭榭原型，适合从整体到局部观察苏州园林亭类建筑的构造秩序与轻巧尺度。',
@@ -88,7 +89,7 @@ const MODEL_OPTIONS: ScenicModelConfig[] = [
     name: '拙政园塔影亭',
     location: '苏州拙政园',
     badge: '整体导览',
-    assetPath: '/assets/1.glb',
+    assetPath: assetUrl('1.glb'),
     shortIntro: '临水八角小亭',
     description:
       '塔影亭位于拙政园西园南端，临溪而筑，亭影常与水面倒影相映成趣。它以八角攒尖顶和轻巧的临水姿态收束西园景序，兼具借景、映景与曲终余韵的园林意境。',
@@ -104,7 +105,7 @@ const MODEL_OPTIONS: ScenicModelConfig[] = [
     name: '西湖湖心亭',
     location: '杭州西湖',
     badge: '整体导览',
-    assetPath: '/assets/2.glb',
+    assetPath: assetUrl('2.glb'),
     shortIntro: '湖上赏景名亭',
     description:
       '湖心亭位于杭州西湖湖心区域，是西湖最具代表性的湖上亭景之一。它四面临水，长于观湖、听雨与远眺群山，展现了江南水上亭台开阔、清远而富于文人气息的景观特征。',
@@ -233,7 +234,7 @@ function PavilionScene({
       />
 
       <group ref={groupRef} scale={model.sceneScale} position={model.scenePosition} onPointerDown={handleModelPointerDown}>
-        <ModelAsset assetPath="/assets/suzhou-pavilion.glb" />
+        <ModelAsset assetPath={assetUrl('suzhou-pavilion.glb')} />
         {currentTag ? (
           <Html
             position={currentTag.position}
@@ -337,7 +338,7 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
     let mounted = true
 
     const loadTags = async () => {
-      const response = await fetch('/assets/tags.json')
+      const response = await fetch(assetUrl('tags.json'))
       const data = (await response.json()) as TagsPayload
 
       if (!mounted) {
@@ -356,15 +357,18 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
     }
   }, [])
 
-  useEffect(() => {
-    setActiveTagId(null)
-  }, [selectedModelId])
-
   const selectedModel = MODEL_OPTIONS.find((model) => model.id === selectedModelId) ?? MODEL_OPTIONS[0]
   const activeTag = tags.find((tag) => tag.id === activeTagId) ?? null
 
   const handleSelectTag = (tag: TagItem | null) => {
     setActiveTagId(tag?.id ?? null)
+  }
+
+  const handleSelectModel = (modelId: ScenicModelId) => {
+    if (modelId !== selectedModelId) {
+      setActiveTagId(null)
+    }
+    setSelectedModelId(modelId)
   }
 
   const detailTitle = activeTag?.name ?? selectedModel.name
@@ -439,7 +443,7 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
                       <button
                         key={model.id}
                         type="button"
-                        onClick={() => setSelectedModelId(model.id)}
+                        onClick={() => handleSelectModel(model.id)}
                         className={`w-full rounded-[22px] border px-4 py-3 text-left transition ${
                           isActive
                             ? 'border-tian-shui-bi/44 bg-[rgba(126,177,144,0.30)] shadow-[0_12px_24px_rgba(81,88,106,0.08)]'
@@ -636,4 +640,4 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
   )
 }
 
-useGLTF.preload('/assets/suzhou-pavilion.glb')
+useGLTF.preload(assetUrl('suzhou-pavilion.glb'))

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
+import { assetUrl } from '../assetUrl'
 
 type Point = {
   x: number
@@ -58,20 +59,10 @@ export function Phase1Scene({ onContinue }: Phase1SceneProps) {
       const imageRatio = image.width / image.height
       const targetRatio = targetWidth / targetHeight
 
-      let drawWidth = targetWidth
-      let drawHeight = targetHeight
-      let offsetX = 0
-      let offsetY = 0
-
-      if (imageRatio > targetRatio) {
-        drawHeight = targetHeight
-        drawWidth = drawHeight * imageRatio
-        offsetX = (targetWidth - drawWidth) / 2
-      } else {
-        drawWidth = targetWidth
-        drawHeight = drawWidth / imageRatio
-        offsetY = (targetHeight - drawHeight) / 2
-      }
+      const drawWidth = imageRatio > targetRatio ? targetHeight * imageRatio : targetWidth
+      const drawHeight = imageRatio > targetRatio ? targetHeight : targetWidth / imageRatio
+      const offsetX = imageRatio > targetRatio ? (targetWidth - drawWidth) / 2 : 0
+      const offsetY = imageRatio > targetRatio ? 0 : (targetHeight - drawHeight) / 2
 
       context.drawImage(image, offsetX, offsetY, drawWidth, drawHeight)
     },
@@ -365,8 +356,8 @@ export function Phase1Scene({ onContinue }: Phase1SceneProps) {
 
     const initializeLayers = async () => {
       const [clearGardenImage, windowFrameImage] = await Promise.all([
-        loadImage('/assets/bg-clear-garden.webp'),
-        loadImage('/assets/window-frame-mask.png'),
+        loadImage(assetUrl('bg-clear-garden.webp')),
+        loadImage(assetUrl('window-frame-mask.png')),
       ])
 
       if (cancelled) {
@@ -606,7 +597,7 @@ export function Phase1Scene({ onContinue }: Phase1SceneProps) {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-black touch-none text-white">
       <img
-        src="/assets/window-frame-mask.png"
+        src={assetUrl('window-frame-mask.png')}
         alt="花窗与原始背景"
         className="absolute inset-0 z-0 h-full w-full object-cover object-center"
       />

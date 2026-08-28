@@ -38,6 +38,8 @@ jobs:
          node-version: 24
          package-manager-cache: false
       - name: Build Project
+        env:
+          VITE_BASE_PATH: /Classical-Gardens-of-Suzhou/
         run: |
           npm i
           npm run build
