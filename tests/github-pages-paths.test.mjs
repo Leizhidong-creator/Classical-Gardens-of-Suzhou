@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { globSync } from 'node:fs'
 import test from 'node:test'
 
-const repositoryUrl = 'https://leizhidong-creator.github.io/Classical-Gardens-of-Suzhou/'
+const repositoryUrl = 'https://leizhidong-creator.github.io/Classical-Gardens-of-Suzhou/?v=20260828'
 
 test('GitHub Pages uses the repository base path and portable asset URLs', () => {
   const viteConfig = readFileSync('vite.config.ts', 'utf8')

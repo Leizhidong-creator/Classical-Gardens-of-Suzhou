@@ -13,7 +13,7 @@
 
 **抖音 AI 创变者黑客松 · 山西赛区一等奖**  ｜  **游园会之星**
 
-[在线体验](https://leizhidong-creator.github.io/Classical-Gardens-of-Suzhou/) · [Meta SAM 3D 官方仓库](https://github.com/facebookresearch/sam-3d-objects)
+[在线体验](https://leizhidong-creator.github.io/Classical-Gardens-of-Suzhou/?v=20260828) · [Meta SAM 3D 官方仓库](https://github.com/facebookresearch/sam-3d-objects)
 
 </div>
 
