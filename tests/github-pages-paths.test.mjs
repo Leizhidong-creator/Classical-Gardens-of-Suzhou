@@ -15,7 +15,7 @@ test('GitHub Pages uses the repository base path and portable asset URLs', () =>
   assert.match(viteConfig, /process\.env\.VITE_BASE_PATH \|\| '\/'/)
   assert.match(workflow, /VITE_BASE_PATH:\s*\/Classical-Gardens-of-Suzhou\//)
   assert.doesNotMatch(source, /["']\/assets\//)
-  assert.match(indexHtml, /href="%BASE_URL%favicon\.svg"/)
+  assert.doesNotMatch(indexHtml, /favicon\.svg/)
   assert.match(readme, new RegExp(repositoryUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')))
   assert.doesNotMatch(readme, /tcloudbaseapp\.com|3d-garden\.leizhidong\.cn/)
 })
