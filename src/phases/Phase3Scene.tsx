@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { assetUrl } from '../assetUrl'
 
 type Phase3SceneProps = {
   onContinue: () => void
@@ -166,7 +167,7 @@ export function Phase3Scene({ onContinue }: Phase3SceneProps) {
   }
 
   return (
-    <section className="relative isolate min-h-screen overflow-hidden bg-[#06090d] text-[#f3f1ec]">
+    <section className="phase3-scene relative isolate min-h-screen overflow-hidden bg-[#06090d] text-[#f3f1ec]">
       <svg className="pointer-events-none absolute h-0 w-0">
         <filter id="ink-poem-filter" x="-20%" y="-20%" width="140%" height="140%">
           <feTurbulence
@@ -190,10 +191,10 @@ export function Phase3Scene({ onContinue }: Phase3SceneProps) {
 
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/assets/第三幕背景.webp')" }}
+        style={{ backgroundImage: `url("${assetUrl('第三幕背景.webp')}")` }}
       />
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-[1600px] flex-col px-4 pb-6 pt-20 md:px-8 md:pb-8 md:pt-24">
+      <div className="phase3-layout relative z-10 mx-auto flex min-h-screen max-w-[1600px] flex-col px-4 pb-6 pt-20 md:px-8 md:pb-8 md:pt-24">
         <div className="flex items-center justify-between">
           <span className="inline-flex rounded-full border border-white/18 bg-[rgba(255,255,255,0.06)] px-4 py-1 text-[11px] tracking-[0.38em] text-[#d8ddd9] backdrop-blur-md">
             PHASE 3
@@ -209,7 +210,7 @@ export function Phase3Scene({ onContinue }: Phase3SceneProps) {
           ) : null}
         </div>
 
-        <div className="relative flex flex-1 items-center justify-center">
+        <div className="phase3-stage relative flex flex-1 items-center justify-center">
           <div className="pointer-events-none absolute inset-0 z-10">
             {visiblePoems.map((entry, index) => (
               <div
@@ -255,17 +256,17 @@ export function Phase3Scene({ onContinue }: Phase3SceneProps) {
             ))}
           </div>
 
-          <div className="relative z-20 mx-auto aspect-square w-full max-w-[min(62vw,68vh)] overflow-hidden rounded-[30px] shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
+          <div className="phase3-lantern relative z-20 mx-auto aspect-square w-full max-w-[min(62vw,68vh)] overflow-hidden rounded-[30px] shadow-[0_24px_72px_rgba(0,0,0,0.28)]">
             <img
               ref={colorImageRef}
-              src="/assets/ink-color-bg.webp"
+              src={assetUrl('ink-color-bg.webp')}
               alt="点亮后的江南夜景"
               className="absolute inset-0 h-full w-full object-cover object-center"
               style={{ opacity: 0 }}
             />
             <img
               ref={darkImageRef}
-              src="/assets/ink-dark-bg.webp"
+              src={assetUrl('ink-dark-bg.webp')}
               alt="昏暗的江南夜景"
               className="absolute inset-0 h-full w-full object-cover object-center"
             />

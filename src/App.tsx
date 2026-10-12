@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { assetUrl } from './assetUrl'
 
 const Phase1Scene = lazy(async () => ({
   default: (await import('./phases/Phase1Scene')).Phase1Scene,
@@ -16,6 +17,10 @@ const Phase4Scene = lazy(async () => ({
 
 type PhaseId = 1 | 2 | 3 | 4
 
+function isAndroidPhoneBrowser() {
+  return /Android/i.test(navigator.userAgent) && /Mobile/i.test(navigator.userAgent)
+}
+
 const phaseMeta: Array<{ id: PhaseId; title: string; subtitle: string }> = [
   { id: 1, title: '破雾寻幽', subtitle: '晨雾擦拭' },
   { id: 2, title: '掌中微缩', subtitle: '亭台赏鉴' },
@@ -24,6 +29,10 @@ const phaseMeta: Array<{ id: PhaseId; title: string; subtitle: string }> = [
 ]
 
 function App() {
+  const [isAndroidPhone] = useState(isAndroidPhoneBrowser)
+  const [isLandscape, setIsLandscape] = useState(() => window.matchMedia('(orientation: landscape)').matches)
+  const [hasStartedMobileExperience, setHasStartedMobileExperience] = useState(false)
+  const [orientationRequestFailed, setOrientationRequestFailed] = useState(false)
   const parsePhaseFromHash = useCallback((): PhaseId => {
     const value = Number(window.location.hash.replace('#phase-', ''))
     return value >= 1 && value <= 4 ? (value as PhaseId) : 1
@@ -34,6 +43,43 @@ function App() {
   const [isAudioPlaying, setIsAudioPlaying] = useState(false)
   const contentRef = useRef<HTMLDivElement | null>(null)
   const backgroundAudioRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    if (!isAndroidPhone) return
+
+    const orientationQuery = window.matchMedia('(orientation: landscape)')
+    const updateOrientation = () => setIsLandscape(orientationQuery.matches)
+    orientationQuery.addEventListener('change', updateOrientation)
+    window.addEventListener('resize', updateOrientation)
+
+    return () => {
+      orientationQuery.removeEventListener('change', updateOrientation)
+      window.removeEventListener('resize', updateOrientation)
+    }
+  }, [isAndroidPhone])
+
+  const enterMobileExperience = async () => {
+    setHasStartedMobileExperience(true)
+    let locked = false
+
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen()
+      }
+    } catch {
+      // Some Android browsers do not expose element fullscreen.
+    }
+
+    try {
+      await screen.orientation.lock('landscape')
+      locked = true
+    } catch {
+      // A manual device rotation remains available below.
+    }
+
+    setOrientationRequestFailed(!locked)
+    setIsLandscape(window.matchMedia('(orientation: landscape)').matches)
+  }
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -50,15 +96,15 @@ function App() {
 
   useEffect(() => {
     const imageAssets = [
-      '/assets/bg-clear-garden.webp',
-      '/assets/window-frame-mask.png',
-      '/assets/模块二背景图.webp',
-      '/assets/ink-dark-bg.webp',
-      '/assets/ink-color-bg.webp',
-      '/assets/element-pavilion.webp',
-      '/assets/element-taihu-rock（1）.webp',
-      '/assets/element-taihu-rock（2）.webp',
-      '/assets/element-flora.webp',
+      assetUrl('bg-clear-garden.webp'),
+      assetUrl('window-frame-mask.png'),
+      assetUrl('模块二背景图.webp'),
+      assetUrl('ink-dark-bg.webp'),
+      assetUrl('ink-color-bg.webp'),
+      assetUrl('element-pavilion.webp'),
+      assetUrl('element-taihu-rock（1）.webp'),
+      assetUrl('element-taihu-rock（2）.webp'),
+      assetUrl('element-flora.webp'),
     ]
 
     const loadImage = (src: string) => {
@@ -84,7 +130,7 @@ function App() {
     }
 
     const preloadLinks = [
-      { href: '/assets/tags.json', rel: 'prefetch' },
+      { href: assetUrl('tags.json'), rel: 'prefetch' },
     ]
       .map(({ href, rel }) => {
         const link = document.createElement('link')
@@ -102,8 +148,8 @@ function App() {
 
     const addDeferredPreloadLinks = () => {
       ;[
-        { href: '/assets/suzhou-pavilion.glb', rel: 'prefetch' },
-        { href: '/assets/音频.mp3', rel: 'prefetch' },
+        { href: assetUrl('suzhou-pavilion.glb'), rel: 'prefetch' },
+        { href: assetUrl('音频.mp3'), rel: 'prefetch' },
       ].forEach(({ href, rel }) => {
         const link = document.createElement('link')
         link.rel = rel
@@ -283,16 +329,36 @@ function App() {
     await playBackgroundAudio()
   }, [isAudioPlaying, pauseBackgroundAudio, playBackgroundAudio])
 
+  const showMobileGate = isAndroidPhone && (!hasStartedMobileExperience || !isLandscape)
+
   return (
-    <main className="relative">
-      <audio ref={backgroundAudioRef} src="/assets/音频.mp3" loop preload="metadata" className="hidden" />
-      <header className="fixed inset-x-0 top-0 z-[500] px-4 py-4 lg:px-6">
-        <div className="mx-auto flex max-w-[1600px] flex-col gap-3 text-white lg:flex-row lg:items-center lg:justify-between">
-          <div className="pointer-events-none">
-            <p className="inline-flex rounded-full border border-white/28 bg-[rgba(12,18,28,0.52)] px-5 py-2.5 text-[17px] font-black tracking-[0.28em] text-white shadow-[0_14px_30px_rgba(0,0,0,0.24)] backdrop-blur-md drop-shadow-[0_4px_16px_rgba(0,0,0,0.18)] lg:px-6 lg:py-3 lg:text-[19px]">
+    <main className={`relative ${isAndroidPhone ? 'android-phone' : ''}`}>
+      <audio ref={backgroundAudioRef} src={assetUrl('音频.mp3')} loop preload="metadata" className="hidden" />
+      {showMobileGate ? (
+        <div className="mobile-orientation-gate" style={{ backgroundImage: `linear-gradient(180deg, rgba(8, 18, 20, .38), rgba(8, 18, 20, .78)), url("${assetUrl('bg-clear-garden.webp')}")` }}>
+          <div className="mobile-orientation-card">
+            <span className="mobile-orientation-mark" aria-hidden="true">▭</span>
+            <p className="mobile-orientation-eyebrow">游园惊梦 · 苏州园林</p>
+            <h1>{hasStartedMobileExperience ? '请横过手机' : '横屏开启游园之旅'}</h1>
+            <p>
+              {hasStartedMobileExperience
+                ? '横屏后将自动进入完整体验。若屏幕没有转动，请开启手机的自动旋转。'
+                : '点击开始后，浏览器将尝试进入全屏并切换为横屏。'}
+            </p>
+            <button type="button" onClick={() => void enterMobileExperience()}>
+              {hasStartedMobileExperience && orientationRequestFailed ? '重试横屏' : '开始横屏体验'}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+      <header className="app-header fixed inset-x-0 top-0 z-[500] px-4 py-4 lg:px-6">
+        <div className="app-header-inner mx-auto flex max-w-[1600px] flex-col gap-3 text-white lg:flex-row lg:items-center lg:justify-between">
+          <div className="app-header-brand pointer-events-none">
+            <p className="app-header-title inline-flex rounded-full border border-white/28 bg-[rgba(12,18,28,0.52)] px-5 py-2.5 text-[17px] font-black tracking-[0.28em] text-white shadow-[0_14px_30px_rgba(0,0,0,0.24)] backdrop-blur-md drop-shadow-[0_4px_16px_rgba(0,0,0,0.18)] lg:px-6 lg:py-3 lg:text-[19px]">
               游园惊梦·一站沉浸式体验苏州园林
             </p>
-            <div className="mt-2 flex items-center gap-3">
+            <div className="app-header-subtitle mt-2 flex items-center gap-3">
               <h1 className="text-lg font-semibold tracking-[0.18em] text-white drop-shadow-[0_4px_18px_rgba(0,0,0,0.28)] lg:text-xl">
                 {currentMeta.title}
               </h1>
@@ -302,7 +368,7 @@ function App() {
             </div>
           </div>
 
-          <nav className="mx-auto flex w-full max-w-[720px] flex-wrap items-center justify-center gap-4 lg:flex-1 lg:gap-5">
+          <nav className="app-phase-nav mx-auto flex w-full max-w-[720px] flex-wrap items-center justify-center gap-4 lg:flex-1 lg:gap-5">
             {phaseMeta.map((phase) => {
               const isActive = phase.id === currentPhase
 
@@ -312,7 +378,7 @@ function App() {
                   type="button"
                   onClick={() => transitionToPhase(phase.id)}
                   disabled={isTransitioning}
-                  className={`min-w-[112px] rounded-full border px-5 py-2.5 text-xs tracking-[0.14em] backdrop-blur-md transition ${
+                  className={`app-phase-button min-w-[112px] rounded-full border px-5 py-2.5 text-xs tracking-[0.14em] backdrop-blur-md transition ${
                     isInkPhase
                       ? isActive
                         ? 'border-black/70 bg-[rgba(17,20,24,0.78)] text-white shadow-[0_10px_24px_rgba(0,0,0,0.22)]'
@@ -334,7 +400,7 @@ function App() {
             }}
             aria-label={isAudioPlaying ? '关闭背景音乐' : '开启背景音乐'}
             title={isAudioPlaying ? '关闭背景音乐' : '开启背景音乐'}
-            className="ml-auto inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/50 bg-[rgba(255,255,255,0.34)] text-white shadow-[0_10px_24px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:bg-[rgba(255,255,255,0.46)] lg:ml-0"
+            className="app-audio-button ml-auto inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/50 bg-[rgba(255,255,255,0.34)] text-white shadow-[0_10px_24px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:bg-[rgba(255,255,255,0.46)] lg:ml-0"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-none stroke-current">
               <path
@@ -368,6 +434,8 @@ function App() {
           {currentPhase === 4 && <Phase4Scene />}
         </Suspense>
       </div>
+        </>
+      )}
     </main>
   )
 }
