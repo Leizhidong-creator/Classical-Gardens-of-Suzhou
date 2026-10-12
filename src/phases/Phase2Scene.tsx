@@ -377,7 +377,7 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
   const modelSummary = selectedModel.id === 'suzhou-pavilion' ? metadata?.description ?? selectedModel.description : selectedModel.description
 
   return (
-    <section className="relative h-screen overflow-hidden bg-[#d7e7d7] text-yuan-shan-dai">
+    <section className="phase2-scene relative h-screen overflow-hidden bg-[#d7e7d7] text-yuan-shan-dai">
       <div
         className="absolute inset-0 scale-[1.02] bg-cover bg-center bg-no-repeat opacity-[0.94]"
         style={{
@@ -388,7 +388,7 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(234,243,232,0.08),rgba(227,236,228,0.04)_38%,rgba(219,229,222,0.10))]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(54,115,76,0.34),transparent_24%),radial-gradient(circle_at_78%_18%,rgba(44,96,64,0.28),transparent_22%),radial-gradient(circle_at_50%_55%,rgba(255,255,255,0.03),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.00)_26%,rgba(36,55,42,0.10))]" />
 
-      <div className="relative mx-auto flex h-full w-full max-w-[1680px] flex-col px-4 pb-4 pt-20 lg:px-6 lg:pb-6 lg:pt-24">
+      <div className="phase2-layout relative mx-auto flex h-full w-full max-w-[1680px] flex-col px-4 pb-4 pt-20 lg:px-6 lg:pb-6 lg:pt-24">
         <div className="mb-4 flex items-center justify-between gap-3 rounded-[26px] border border-white/68 bg-[rgba(236,246,238,0.58)] px-4 py-3 shadow-mist-panel backdrop-blur-xl md:hidden">
           <div className="text-right">
             <p className="text-[11px] tracking-[0.28em] text-tian-shui-bi">掌中微缩</p>
@@ -403,8 +403,8 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
           </button>
         </div>
 
-        <div className="grid min-h-0 flex-1 grid-cols-1 gap-4 md:grid-cols-[minmax(240px,20%)_minmax(680px,1fr)_minmax(240px,20%)]">
-          <aside className="hidden min-h-0 flex-col overflow-hidden rounded-[30px] border border-white/68 bg-[linear-gradient(180deg,rgba(225,241,229,0.34),rgba(214,232,220,0.30))] p-6 shadow-mist-panel backdrop-blur-xl md:flex">
+        <div className="phase2-grid grid min-h-0 flex-1 grid-cols-1 gap-4 md:grid-cols-[minmax(240px,20%)_minmax(680px,1fr)_minmax(240px,20%)]">
+          <aside className="phase2-model-panel hidden min-h-0 flex-col overflow-hidden rounded-[30px] border border-white/68 bg-[linear-gradient(180deg,rgba(225,241,229,0.34),rgba(214,232,220,0.30))] p-6 shadow-mist-panel backdrop-blur-xl md:flex">
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.62]"
               style={{
@@ -415,7 +415,7 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
               }}
             />
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(242,248,243,0.18),rgba(232,242,236,0.10)_38%,rgba(220,234,224,0.16))]" />
-            <div className="relative z-10 shrink-0">
+            <div className="phase2-model-intro relative z-10 shrink-0">
               <span className="inline-flex rounded-full border border-tian-shui-bi/25 bg-tian-shui-bi/10 px-4 py-1 text-[11px] tracking-[0.35em] text-tian-shui-bi">
                 Phase 2
               </span>
@@ -427,7 +427,7 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
               </p>
             </div>
 
-            <div className="relative z-10 mt-6 shrink-0 rounded-[26px] border border-[#c8d8d0]/70 bg-[rgba(238,246,240,0.38)] p-4 backdrop-blur-md">
+            <div className="phase2-model-picker relative z-10 mt-6 shrink-0 rounded-[26px] border border-[#c8d8d0]/70 bg-[rgba(238,246,240,0.38)] p-4 backdrop-blur-md">
               <div className="flex flex-col">
                 <div className="flex flex-wrap items-center gap-2">
                   <p className="text-xs font-black tracking-[0.28em] text-black">微缩模型</p>
@@ -473,7 +473,7 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
             </div>
           </aside>
 
-          <section className="relative order-1 min-h-0 overflow-hidden rounded-[38px] border border-white/70 bg-[linear-gradient(180deg,rgba(241,246,240,0.16),rgba(226,234,229,0.10))] shadow-[0_36px_80px_rgba(31,37,45,0.14)] backdrop-blur-[1px] md:order-none">
+          <section className="phase2-stage relative order-1 min-h-0 overflow-hidden rounded-[38px] border border-white/70 bg-[linear-gradient(180deg,rgba(241,246,240,0.16),rgba(226,234,229,0.10))] shadow-[0_36px_80px_rgba(31,37,45,0.14)] backdrop-blur-[1px] md:order-none">
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.82]"
               style={{
@@ -486,8 +486,8 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
             <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,rgba(55,124,77,0.36),transparent_65%)]" />
             <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.00)_18%,rgba(42,61,49,0.08))]" />
 
-            <div className="relative z-10 flex h-full min-h-[62vh] flex-col md:min-h-0">
-              <header className="flex items-start justify-between px-5 pb-2 pt-5 md:px-8 md:pt-6">
+            <div className="phase2-stage-inner relative z-10 flex h-full min-h-[62vh] flex-col md:min-h-0">
+              <header className="phase2-stage-header flex items-start justify-between px-5 pb-2 pt-5 md:px-8 md:pt-6">
                 <div>
                   <p className="text-xs tracking-[0.32em] text-tian-shui-bi">绝对视觉中心</p>
                   <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -506,8 +506,8 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
                 </div>
               </header>
 
-              <div className="flex-1 px-3 pb-3 md:min-h-0 md:px-4 md:pb-4 lg:px-5 lg:pb-5">
-                <div className="relative h-full min-h-[360px] overflow-hidden rounded-[32px] border border-white/68 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),rgba(232,238,234,0.18)_54%,rgba(214,223,219,0.20))]">
+              <div className="phase2-canvas-wrap flex-1 px-3 pb-3 md:min-h-0 md:px-4 md:pb-4 lg:px-5 lg:pb-5">
+                <div className="phase2-canvas relative h-full min-h-[360px] overflow-hidden rounded-[32px] border border-white/68 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.42),rgba(232,238,234,0.18)_54%,rgba(214,223,219,0.20))]">
                   <div
                     className="pointer-events-none absolute inset-0 z-0 opacity-[0.62]"
                     style={{
@@ -542,7 +542,7 @@ export function Phase2Scene({ onContinue }: Phase2SceneProps) {
             </div>
           </section>
 
-          <aside className="hidden min-h-0 flex-col overflow-hidden rounded-[30px] border border-white/68 bg-[linear-gradient(180deg,rgba(225,241,229,0.34),rgba(214,232,220,0.30))] p-5 shadow-mist-panel backdrop-blur-xl md:flex">
+          <aside className="phase2-detail-panel hidden min-h-0 flex-col overflow-hidden rounded-[30px] border border-white/68 bg-[linear-gradient(180deg,rgba(225,241,229,0.34),rgba(214,232,220,0.30))] p-5 shadow-mist-panel backdrop-blur-xl md:flex">
             <div
               className="pointer-events-none absolute inset-0 opacity-[0.62]"
               style={{

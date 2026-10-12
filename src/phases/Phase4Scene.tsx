@@ -155,7 +155,7 @@ export function Phase4Scene() {
   }
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#edf1eb] text-yuan-shan-dai">
+    <section className="phase4-scene relative min-h-screen overflow-hidden bg-[#edf1eb] text-yuan-shan-dai">
       <div
         className="absolute inset-0 scale-[1.03] bg-cover bg-center bg-no-repeat opacity-[0.98]"
         style={{
@@ -165,9 +165,9 @@ export function Phase4Scene() {
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.08),transparent_24%),linear-gradient(180deg,rgba(14,18,20,0.08),rgba(14,18,20,0.02)_36%,rgba(14,18,20,0.16))]" />
 
-      <div className="relative mx-auto flex min-h-screen max-w-[1600px] flex-col px-4 py-24 lg:px-6 lg:py-24">
-        <div className="grid min-h-[calc(100vh-10rem)] gap-4 xl:grid-cols-[280px_minmax(500px,0.9fr)_360px]">
-          <aside className="flex flex-col rounded-[32px] border border-white/16 bg-transparent p-6 shadow-[0_18px_40px_rgba(31,37,45,0.08)]">
+      <div className="phase4-layout relative mx-auto flex min-h-screen max-w-[1600px] flex-col px-4 py-24 lg:px-6 lg:py-24">
+        <div className="phase4-grid grid min-h-[calc(100vh-10rem)] gap-4 xl:grid-cols-[280px_minmax(500px,0.9fr)_360px]">
+          <aside className="phase4-elements flex flex-col rounded-[32px] border border-white/16 bg-transparent p-6 shadow-[0_18px_40px_rgba(31,37,45,0.08)]">
             <div>
               <span className="inline-flex rounded-full border border-tian-shui-bi/28 bg-tian-shui-bi/10 px-4 py-1 text-[12px] tracking-[0.36em] text-[rgba(97,122,113,0.98)]">
                 PHASE 4
@@ -217,8 +217,8 @@ export function Phase4Scene() {
             </div>
           </aside>
 
-          <section className="rounded-[36px] border border-white/14 bg-transparent p-4 shadow-[0_32px_80px_rgba(31,37,45,0.12)]">
-            <div className="flex h-full min-h-[560px] flex-col rounded-[32px] border border-[rgba(215,223,218,0.24)] bg-transparent p-5">
+          <section className="phase4-sandbox-panel rounded-[36px] border border-white/14 bg-transparent p-4 shadow-[0_32px_80px_rgba(31,37,45,0.12)]">
+            <div className="phase4-sandbox-inner flex h-full min-h-[560px] flex-col rounded-[32px] border border-[rgba(215,223,218,0.24)] bg-transparent p-5">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-xs tracking-[0.32em] text-tian-shui-bi">俯视沙盘</p>
@@ -241,7 +241,7 @@ export function Phase4Scene() {
 
               <div
                 ref={sandboxRef}
-                className="relative mt-5 h-[470px] touch-none overflow-hidden rounded-[30px] border border-white/85 bg-[radial-gradient(circle_at_top,rgba(248,245,238,0.26),rgba(232,237,230,0.16)_48%,rgba(209,218,212,0.2))] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.72),0_0_0_1px_rgba(255,255,255,0.22)] lg:h-[500px]"
+                className="phase4-sandbox relative mt-5 h-[470px] touch-none overflow-hidden rounded-[30px] border border-white/85 bg-[radial-gradient(circle_at_top,rgba(248,245,238,0.26),rgba(232,237,230,0.16)_48%,rgba(209,218,212,0.2))] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.72),0_0_0_1px_rgba(255,255,255,0.22)] lg:h-[500px]"
               >
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,rgba(81,88,106,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(81,88,106,0.04)_1px,transparent_1px)] bg-[length:72px_72px]" />
                 <div className="pointer-events-none absolute inset-3 rounded-[28px] border border-white/82" />
@@ -290,14 +290,14 @@ export function Phase4Scene() {
             </div>
           </section>
 
-          <aside className="rounded-[36px] border border-white/14 bg-transparent p-4 shadow-[0_18px_40px_rgba(31,37,45,0.08)]">
-            <div className="flex h-full min-h-[560px] flex-col rounded-[32px] border border-[rgba(215,223,218,0.24)] bg-transparent p-5">
+          <aside className="phase4-preview-panel rounded-[36px] border border-white/14 bg-transparent p-4 shadow-[0_18px_40px_rgba(31,37,45,0.08)]">
+            <div className="phase4-preview-inner flex h-full min-h-[560px] flex-col rounded-[32px] border border-[rgba(215,223,218,0.24)] bg-transparent p-5">
               <div>
                 <p className="text-xs tracking-[0.32em] text-tian-shui-bi">花窗视角</p>
                 <h3 className="mt-3 text-3xl font-semibold tracking-[0.14em] text-mo-qing">窗中成景</h3>
               </div>
 
-              <div className="relative mt-5 h-[470px] overflow-hidden rounded-[34px] border border-[#d7dfda] bg-[#d7ddd7] lg:h-[500px]">
+              <div className="phase4-preview relative mt-5 h-[470px] overflow-hidden rounded-[34px] border border-[#d7dfda] bg-[#d7ddd7] lg:h-[500px]">
                 <img
                   src={assetUrl('水墨背景.webp?v=20260426-unified-ink')}
                   alt=""
