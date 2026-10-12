@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
+import { trackGardenEvent } from '../analytics'
 import { assetUrl } from '../assetUrl'
 
 type GardenElement = {
@@ -73,6 +74,7 @@ function clamp(value: number, min: number, max: number) {
 export function Phase4Scene() {
   const sandboxRef = useRef<HTMLDivElement | null>(null)
   const dragStateRef = useRef<DragState>(null)
+  const hasTrackedDesignRef = useRef(false)
   const [elements, setElements] = useState<GardenElement[]>(initialElements)
   const [activeElementId, setActiveElementId] = useState<string>('pavilion')
 
@@ -148,6 +150,11 @@ export function Phase4Scene() {
       id: element.id,
       offsetX: pointerX - element.x,
       offsetY: pointerY - element.y,
+    }
+
+    if (!hasTrackedDesignRef.current) {
+      trackGardenEvent('design_start', 'phase_4')
+      hasTrackedDesignRef.current = true
     }
 
     setActiveElementId(element.id)

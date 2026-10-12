@@ -1,5 +1,6 @@
 import gsap from 'gsap'
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { trackGardenEvent } from './analytics'
 import { assetUrl } from './assetUrl'
 
 const Phase1Scene = lazy(async () => ({
@@ -59,6 +60,7 @@ function App() {
   }, [isAndroidPhone])
 
   const enterMobileExperience = async () => {
+    trackGardenEvent('mobile_start', 'landscape')
     setHasStartedMobileExperience(true)
     let locked = false
 
@@ -194,6 +196,10 @@ function App() {
   }, [currentPhase])
 
   useEffect(() => {
+    trackGardenEvent('phase_view', `phase_${currentPhase}`)
+  }, [currentPhase])
+
+  useEffect(() => {
     const container = contentRef.current
 
     if (!container) {
@@ -282,13 +288,14 @@ function App() {
   const isInkPhase = currentPhase === 4
 
   const transitionToPhase = useCallback(
-    (nextPhase: PhaseId) => {
+    (nextPhase: PhaseId, source: 'navigation' | 'continue' = 'navigation') => {
       const container = contentRef.current
 
       if (!container || nextPhase === currentPhase || isTransitioning) {
         return
       }
 
+      trackGardenEvent(source === 'continue' ? 'phase_continue' : 'phase_navigation', `phase_${currentPhase}_to_${nextPhase}`)
       setIsTransitioning(true)
 
       gsap.to(container, {
@@ -323,11 +330,14 @@ function App() {
   const toggleBackgroundAudio = useCallback(async () => {
     if (isAudioPlaying) {
       pauseBackgroundAudio()
+      trackGardenEvent('audio_off', `phase_${currentPhase}`)
       return
     }
 
-    await playBackgroundAudio()
-  }, [isAudioPlaying, pauseBackgroundAudio, playBackgroundAudio])
+    if (await playBackgroundAudio()) {
+      trackGardenEvent('audio_on', `phase_${currentPhase}`)
+    }
+  }, [currentPhase, isAudioPlaying, pauseBackgroundAudio, playBackgroundAudio])
 
   const showMobileGate = isAndroidPhone && (!hasStartedMobileExperience || !isLandscape)
 
@@ -428,9 +438,9 @@ function App() {
             </div>
           }
         >
-          {currentPhase === 1 && <Phase1Scene onContinue={() => transitionToPhase(2)} />}
-          {currentPhase === 2 && <Phase2Scene onContinue={() => transitionToPhase(3)} />}
-          {currentPhase === 3 && <Phase3Scene onContinue={() => transitionToPhase(4)} />}
+          {currentPhase === 1 && <Phase1Scene onContinue={() => transitionToPhase(2, 'continue')} />}
+          {currentPhase === 2 && <Phase2Scene onContinue={() => transitionToPhase(3, 'continue')} />}
+          {currentPhase === 3 && <Phase3Scene onContinue={() => transitionToPhase(4, 'continue')} />}
           {currentPhase === 4 && <Phase4Scene />}
         </Suspense>
       </div>
